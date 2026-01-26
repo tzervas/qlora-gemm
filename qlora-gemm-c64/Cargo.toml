@@ -1,0 +1,27 @@
+[package]
+name = "qlora-gemm-c64"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+description = "c64 (complex f64) matrix multiplication for qlora-gemm - maintained fork using qlora-paste"
+readme = "../README.md"
+repository.workspace = true
+license.workspace = true
+keywords.workspace = true
+
+[dependencies]
+raw-cpuid = { workspace = true }
+seq-macro = { workspace = true }
+dyn-stack = { workspace = true, default-features = false }
+num-traits = { workspace = true, default-features = false }
+num-complex = { workspace = true, default-features = false }
+qlora-paste = { workspace = true }
+
+qlora-gemm-common = { version = "0.20.0", default-features = false, path = "../qlora-gemm-common" }
+
+[features]
+default = ["std", "rayon"]
+std = ["dyn-stack/std", "qlora-gemm-common/std"]
+experimental-apple-amx = ["std", "qlora-gemm-common/experimental-apple-amx"]
+x86-v4 = ["qlora-gemm-common/x86-v4"]
+rayon = ["std", "qlora-gemm-common/rayon"]

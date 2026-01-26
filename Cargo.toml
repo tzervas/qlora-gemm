@@ -1,0 +1,34 @@
+[workspace]
+members = ["qlora-gemm", "qlora-gemm-common", "qlora-gemm-f16", "qlora-gemm-f32", "qlora-gemm-f64", "qlora-gemm-c32", "qlora-gemm-c64"]
+resolver = "2"
+
+[workspace.package]
+version = "0.20.0"
+edition = "2021"
+authors = ["Tyler Zervas <tz-dev@vectorweight.com>", "sarah <>"]
+license = "MIT"
+repository = "https://github.com/tzervas/qlora-gemm"
+keywords = ["linear-algebra", "matrix", "gemm"]
+
+[workspace.dependencies]
+once_cell = { version = "1.18", default-features = false }
+seq-macro = "0.3"
+qlora-paste = "1.0"
+raw-cpuid = { version = "11.2", default-features = false }
+sysctl = "0.6.0"
+dyn-stack = { version = "0.13", default-features = false, features = ["alloc"] }
+num-traits = { version = "0.2", default-features = false }
+num-complex = { version = "0.4", default-features = false }
+rayon = "1"
+half = { version = "2.3", default-features = false, features = ["num-traits", "bytemuck"] }
+
+[profile.dev]
+opt-level = 3
+debug = true
+debug-assertions = true
+overflow-checks = true
+lto = false
+panic = 'unwind'
+incremental = true
+codegen-units = 256
+rpath = false

@@ -1,0 +1,30 @@
+[package]
+name = "qlora-gemm-f16"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+description = "f16 matrix multiplication for qlora-gemm - maintained fork using qlora-paste"
+readme = "../README.md"
+repository.workspace = true
+license.workspace = true
+keywords.workspace = true
+
+[dependencies]
+raw-cpuid = { workspace = true }
+seq-macro = { workspace = true }
+dyn-stack = { workspace = true, default-features = false }
+num-traits = { workspace = true, default-features = false }
+num-complex = { workspace = true, default-features = false }
+qlora-paste = { workspace = true }
+rayon = { workspace = true, optional = true }
+
+qlora-gemm-common = { version = "0.20.0", default-features = false, path = "../qlora-gemm-common", features = ["f16"] }
+qlora-gemm-f32 = { version = "0.20.0", default-features = false, path = "../qlora-gemm-f32" }
+half = { workspace = true, default-features = false }
+
+[features]
+default = ["std", "rayon"]
+std = ["dyn-stack/std", "qlora-gemm-common/std", "qlora-gemm-f32/std"]
+experimental-apple-amx = ["std", "qlora-gemm-common/experimental-apple-amx", "qlora-gemm-f32/experimental-apple-amx"]
+x86-v4 = ["qlora-gemm-common/x86-v4", "qlora-gemm-f32/x86-v4"]
+rayon = ["dep:rayon", "std", "qlora-gemm-common/rayon", "qlora-gemm-f32/rayon"]
