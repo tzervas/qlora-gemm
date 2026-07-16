@@ -9,7 +9,7 @@ name: Run Tests
 jobs:
   testing:
     name: testing-${{ matrix.toolchain }}-${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
+    runs-on: ${{ matrix.os == 'ubuntu-latest' && fromJSON('["self-hosted", "linux", "x64", "podman"]') || matrix.os }}
     strategy:
       fail-fast: false
       matrix:
