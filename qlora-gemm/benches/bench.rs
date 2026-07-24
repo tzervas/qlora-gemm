@@ -1,7 +1,11 @@
 use aligned_vec::{avec, AVec};
 use diol::prelude::*;
+// The upstream crate was named `gemm`; this fork renamed it to `qlora-gemm`.
+// Alias it back so the bench's `gemm(..)` calls and `gemm::` paths resolve
+// unchanged (module vs value namespaces let the crate and the `gemm` fn coexist).
 use gemm::*;
 use num_traits::One;
+use qlora_gemm as gemm;
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 enum Layout {
