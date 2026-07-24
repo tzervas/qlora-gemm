@@ -13,7 +13,7 @@ keywords = ["linear-algebra", "matrix", "gemm"]
 [workspace.dependencies]
 once_cell = { version = "1.18", default-features = false }
 seq-macro = "0.3"
-qlora-paste = "1.0"
+qlora-paste = "1.0.21"
 raw-cpuid = { version = "11.2", default-features = false }
 sysctl = "0.6.0"
 dyn-stack = { version = "0.13", default-features = false, features = ["alloc"] }

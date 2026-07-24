@@ -40,6 +40,14 @@ jobs:
     needs: detect
     if: needs.detect.outputs.rust == 'true'
     runs-on: [self-hosted, linux, x64, podman]
+    # Root Cargo.toml sets [profile.dev] opt-level=3 + codegen-units=256 (intentional
+    # for numerics test perf). Under `cargo check/test --workspace`, cargo compiles many
+    # crates in parallel (default = nproc), and heavy generic deps like `simba` (via the
+    # `nalgebra` dev-dep) at opt-level 3 spike peak RSS. On the memory-capped self-hosted
+    # podman runner this SIGKILLs (OOM, signal 9). Serialize crate compilation to cap
+    # peak memory — CI-only; does NOT change the committed profile.
+    env:
+      CARGO_BUILD_JOBS: 1
     steps:
       - uses: actions/checkout@v4
       - name: cargo check
